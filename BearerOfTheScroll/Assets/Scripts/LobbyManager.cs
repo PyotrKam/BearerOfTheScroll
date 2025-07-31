@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainEntry : MonoBehaviour
+public class LobbyManager : MonoBehaviour
 {
     private void Start()
     {        
