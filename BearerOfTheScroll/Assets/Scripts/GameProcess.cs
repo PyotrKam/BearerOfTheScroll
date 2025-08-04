@@ -13,13 +13,19 @@ public class GameProcess : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("GameProcess is working!");
+        //Debug.Log("GameProcess is working!");
 
-        Vector3 spawnPosition = new Vector3(0, 0.4f, 0);
+        Vector3 spawnPosition = new Vector3(1.732051f, 0.4f, -21f);
 
         GameObject playerGO = Instantiate(playerPrefab, spawnPosition, Quaternion.identity, transform);
 
         PlayerController player = playerGO.GetComponent<PlayerController>();
+
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetTarget(player.transform);
+        }
 
         if (onGameStartedEvent !=null)
         {
@@ -29,7 +35,7 @@ public class GameProcess : MonoBehaviour
         if (onPlayerSpawnedEvent != null)
         {
             onPlayerSpawnedEvent.Raise(player);
-            Debug.Log("Event PlayerSpawnEvent Goooo");
+            //Debug.Log("Event PlayerSpawnEvent Goooo");
         }
             
     }

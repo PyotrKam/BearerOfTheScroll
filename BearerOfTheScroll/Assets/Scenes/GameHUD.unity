@@ -1122,6 +1122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e88a35bf351f9642afe018c6c1a2086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextTurnButton: {fileID: 314631674}
 --- !u!1 &1846977603
 GameObject:
   m_ObjectHideFlags: 0

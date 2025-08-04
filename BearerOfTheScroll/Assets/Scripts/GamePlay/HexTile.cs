@@ -46,7 +46,7 @@ public class HexTile : MonoBehaviour
 
     private void OnClicked()
     {
-        Debug.Log($"Hex {name} was choosed");
+        //Debug.Log($"Hex {name} was choosed");
 
         if (player != null)
         {
@@ -54,7 +54,7 @@ public class HexTile : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No player, event not worked");
+            //Debug.LogWarning("No player, event not worked");
         }
     }
 

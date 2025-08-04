@@ -10,19 +10,19 @@ public class GameEvent : ScriptableObject
 
     public void Raise()
     {
-        Debug.Log($"[GameEvent] {name} — Raise()");
+        //Debug.Log($"[GameEvent] {name} — Raise()");
         listeners?.Invoke();
     } 
 
     public void Register(Action listener)
     {
-        Debug.Log($"[GameEvent] {name} — Register: {listener.Method.Name}");
+        //Debug.Log($"[GameEvent] {name} — Register: {listener.Method.Name}");
         listeners += listener;
     }
 
     public void Unregister(Action listener)
     {
-        Debug.Log($"[GameEvent] {name} — Unregister: {listener.Method.Name}");
+        //Debug.Log($"[GameEvent] {name} — Unregister: {listener.Method.Name}");
         listeners -= listener;
     }
 
