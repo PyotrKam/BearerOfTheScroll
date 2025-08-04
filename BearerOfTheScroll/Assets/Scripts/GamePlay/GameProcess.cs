@@ -13,9 +13,9 @@ public class GameProcess : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("GameProcess is working!");
+        //Debug.Log("GameProcess is working!");
 
-        Vector3 spawnPosition = new Vector3(0, 0.4f, 0);
+        Vector3 spawnPosition = new Vector3(-40.7032f, 0.4f, -31.5f);
 
         GameObject playerGO = Instantiate(playerPrefab, spawnPosition, Quaternion.identity, transform);
 
@@ -29,8 +29,24 @@ public class GameProcess : MonoBehaviour
         if (onPlayerSpawnedEvent != null)
         {
             onPlayerSpawnedEvent.Raise(player);
-            Debug.Log("Event PlayerSpawnEvent Goooo");
+            //Debug.Log("Event PlayerSpawnEvent Goooo");
+
+            MovementHighlighter highlighter = FindObjectOfType<MovementHighlighter>();
+            if (highlighter != null)
+            {
+                highlighter.SetPlayer(player);
+                highlighter.Highlight();
+                Debug.Log("Highlight invoked");
+            }
+
+            else
+            {
+                Debug.LogWarning("Not found MovementHighlighter in scene.");
+            }
         }
-            
+
+        CameraController camController = Camera.main.GetComponent<CameraController>();
+        if (camController != null)
+            camController.SetTarget(player.transform);
     }
 }

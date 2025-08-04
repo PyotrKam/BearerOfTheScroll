@@ -9,6 +9,13 @@ public class HexTile : MonoBehaviour
 
     private PlayerController player;
 
+    private HexAvailabilityController availabilityController;
+
+    private void Awake()
+    {
+        availabilityController = GetComponent<HexAvailabilityController>();
+    }
+
     private void OnEnable()
     {
         if (onPlayerSpawnedEvent != null)
@@ -46,6 +53,12 @@ public class HexTile : MonoBehaviour
 
     private void OnClicked()
     {
+        if (availabilityController != null && !availabilityController.IsAvailable())
+        {            
+            Debug.Log($"Hex {name} not available: {availabilityController.IsAvailable()}");
+            return;
+        }
+
         Debug.Log($"Hex {name} was choosed");
 
         if (player != null)
@@ -62,4 +75,6 @@ public class HexTile : MonoBehaviour
     {
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
+
+    
 }

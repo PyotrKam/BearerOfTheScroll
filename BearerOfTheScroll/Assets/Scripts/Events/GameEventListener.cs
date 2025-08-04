@@ -10,7 +10,7 @@ public class GameEventListener : MonoBehaviour
     {
         if (gameEvent != null)
         {
-            Debug.Log($"[GameEventListener] {name} — Registering");
+            //Debug.Log($"[GameEventListener] {name} — Registering");
             gameEvent.Register(OnEventRaised);
         }
             
@@ -20,7 +20,7 @@ public class GameEventListener : MonoBehaviour
     {
         if (gameEvent != null)
         {
-            Debug.Log($"[GameEventListener] {name} — Unregistering");
+            //Debug.Log($"[GameEventListener] {name} — Unregistering");
             gameEvent.Unregister(OnEventRaised);
         }
             
@@ -28,7 +28,7 @@ public class GameEventListener : MonoBehaviour
 
     private void OnEventRaised()
     {
-        Debug.Log($"[GameEventListener] {name} — Event Raised → Invoking Response");
+        //Debug.Log($"[GameEventListener] {name} — Event Raised → Invoking Response");
         response?.Invoke();
     }
 }
