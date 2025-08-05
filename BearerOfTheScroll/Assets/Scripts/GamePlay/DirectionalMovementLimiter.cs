@@ -6,15 +6,18 @@ public class DirectionalMovementLimiter : MonoBehaviour
     [SerializeField]
     private List<Vector3> allowedDirections = new List<Vector3>
     {
-        new Vector3(0, 0, 1),      
-        new Vector3(-1, 0, 1),     
-        new Vector3(1, 0, 1)       
+        new Vector3(1f, 0, 0f),                       
+    new Vector3(0.5f, 0, Mathf.Sqrt(3) / 2f),     
+    new Vector3(-0.5f, 0, Mathf.Sqrt(3) / 2f),    
+    new Vector3(-1f, 0, 0f),                      
+    new Vector3(-0.5f, 0, -Mathf.Sqrt(3) / 2f),   
+    new Vector3(0.5f, 0, -Mathf.Sqrt(3) / 2f)                
     };
 
     [Range(0f, 1f)]
     [SerializeField] private float directionTolerance = 0.9f;
-
-    [SerializeField] private float maxDistance = 1.5f;
+        
+    [SerializeField] private float maxDistance = 2.0f;
 
     public bool IsMoveAllowed(Vector3 from, Vector3 to)
     {
