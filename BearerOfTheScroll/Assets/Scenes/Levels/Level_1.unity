@@ -1282,6 +1282,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 856841b80050b0e4d9ff280ee51a667a, type: 3}
+--- !u!1 &951776257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951776259}
+  - component: {fileID: 951776258}
+  m_Layer: 0
+  m_Name: MovementHighlighter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &951776258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951776257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25c15a9fc4c7e947b366c0eb4661e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 2359431851731228936, guid: 0b046ddd9b19de142ba2ea2d2d293db5, type: 3}
+--- !u!4 &951776259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951776257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.0478266, y: -4.382953, z: -12.136443}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1016089650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2295,6 +2340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6970572351591886678, guid: 8633bfeb769e64943a16c507cc858b8b, type: 3}
+  movementHighlighter: {fileID: 951776258}
   onGameStartedEvent: {fileID: 11400000, guid: 8d8605dc38470db438f64d7a92bf79a8, type: 2}
   onPlayerSpawnedEvent: {fileID: 11400000, guid: e631aba92b96f6447b90cb96f02a2473, type: 2}
 --- !u!4 &1515317028 stripped
@@ -3588,3 +3634,4 @@ SceneRoots:
   - {fileID: 1492566503}
   - {fileID: 928625356}
   - {fileID: 1051682552}
+  - {fileID: 951776259}

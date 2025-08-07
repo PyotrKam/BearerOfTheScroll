@@ -28,6 +28,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (!movementLimiter.IsHexAvailable(targetPosition))
+        {
+            Debug.Log("Movement blocked: Hex not available.");
+            return;
+        }
+
         transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
 
         FindObjectOfType<TurnManager>()?.OnPlayerMoved();
