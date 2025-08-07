@@ -68,6 +68,7 @@ public class TurnManager : MonoBehaviour
             }
             else
             {
+
                 Debug.LogWarning("Button NextTurnButton not found!");
                 yield break;
             }
