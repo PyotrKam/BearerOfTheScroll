@@ -24,7 +24,7 @@ public class MovementHighlighter : MonoBehaviour
 
     public void ClearMarkers()
     {
-        Debug.Log($"[Highlighter] Clearing {activeHighlights.Count} highlights");
+        //Debug.Log($"[Highlighter] Clearing {activeHighlights.Count} highlights");
 
         foreach (GameObject obj in activeHighlights)
         {
