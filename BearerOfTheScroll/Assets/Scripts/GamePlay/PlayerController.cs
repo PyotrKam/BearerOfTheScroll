@@ -38,4 +38,15 @@ public class PlayerController : MonoBehaviour
 
         FindObjectOfType<TurnManager>()?.OnPlayerMoved();
     }
+
+    public bool CanMoveTo(Vector3 targetPosition)
+    {
+        if (!movementLimiter.CanMove())
+            return false;
+
+        if (directionalLimiter != null && !directionalLimiter.IsMoveAllowed(transform.position, targetPosition))
+            return false;
+
+        return true;
+    }
 }
