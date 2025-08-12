@@ -8,6 +8,9 @@ public class TurnManager : MonoBehaviour
 
     private MovementLimiter movementLimiter;
 
+    private PlayerController player;
+    private MovementHighlighter movementHighlighter;
+
     private int turnCounter = 1;
 
 
@@ -16,6 +19,15 @@ public class TurnManager : MonoBehaviour
         Debug.Log("TurnManager Start called");
 
         movementLimiter = FindObjectOfType<MovementLimiter>();
+        player = FindObjectOfType<PlayerController>();
+        movementHighlighter = FindObjectOfType<MovementHighlighter>();
+
+        if (movementHighlighter == null) Debug.LogWarning("MovementHighlighter not found!");
+        if (player == null) Debug.LogWarning("PlayerController not found!");
+        if (movementLimiter == null) Debug.LogWarning("MovementLimiter not found!");
+
+        if (movementHighlighter != null && player != null)
+            movementHighlighter.ShowAllowedMoves(player);
 
         StartCoroutine(FindButtonLater());
     }
@@ -28,6 +40,10 @@ public class TurnManager : MonoBehaviour
 
         movementLimiter?.EnableMovement();
         nextTurnButton.gameObject.SetActive(false);
+
+        if (movementHighlighter != null && player != null)
+            movementHighlighter.ShowAllowedMoves(player);
+
         // - AI turn
         // - Victory chek
         // - Lives check

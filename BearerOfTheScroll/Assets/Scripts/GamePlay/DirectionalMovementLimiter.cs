@@ -38,6 +38,40 @@ public class DirectionalMovementLimiter : MonoBehaviour
         return false;
     }
 
+
+    //-----12
+    public bool TryGetAlignedDirection(Vector3 from, Vector3 to, out Vector3 alignedDir)
+    {
+        alignedDir = Vector3.zero;
+
+        Vector3 delta = (to - from);
+        if (delta.magnitude > maxDistance) return false;
+
+        Vector3 direction = delta.normalized;
+
+        float bestDot = -1f;
+        Vector3 best = Vector3.zero;
+
+        foreach (var dir in allowedDirections)
+        {
+            float dot = Vector3.Dot(direction, dir.normalized);
+
+            if (dot >= directionTolerance && dot > bestDot)
+            {
+                bestDot = dot;
+                best = dir.normalized;
+            }
+        }
+
+        if (bestDot >= directionTolerance)
+        {
+            alignedDir = best;
+            return true;
+        }
+
+        return false;
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {        
