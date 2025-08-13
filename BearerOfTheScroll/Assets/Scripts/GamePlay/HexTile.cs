@@ -6,8 +6,10 @@ public class HexTile : MonoBehaviour
 {
     [Header("Events")]
     [SerializeField] private PlayerSpawnEvent onPlayerSpawnedEvent;
+    [SerializeField] public bool Walkable = true;
 
     private PlayerController player;
+    
 
     private void OnEnable()
     {

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1007629625538457994}
   - component: {fileID: -3768114523126691829}
   - component: {fileID: -7809802243196551543}
-  m_Layer: 3
-  m_Name: hexTileS
-  m_TagString: Untagged
+  m_Layer: 0
+  m_Name: hexHighlighter
+  m_TagString: Highlight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2359431851731228936}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 227.87341, y: 0.099999994, z: -1146.118}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 227.87341, y: 0.0141, z: -1146.118}
+  m_LocalScale: {x: 1, y: 0.1408, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08e4c796b6cc95a49b30232644d183bb, type: 2}
+  - {fileID: 2100000, guid: d01680276d3e1dc43ac00da88dd9a036, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,7 +102,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2359431851731228936}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40932dd5e3f60f74ea8de24e4b6a7b87, type: 3}
   m_Name: 

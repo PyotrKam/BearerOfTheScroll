@@ -118,7 +118,9 @@ GameObject:
   - component: {fileID: 6458438711280635857}
   - component: {fileID: 2003164602476623424}
   - component: {fileID: 4850330010607498252}
-  - component: {fileID: 7757866653971915859}
+  - component: {fileID: 5421127767580262991}
+  - component: {fileID: 5452535066963113852}
+  - component: {fileID: 4387979577316848750}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -155,7 +157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementLimiter: {fileID: 4850330010607498252}
-  directionalLimiter: {fileID: 7757866653971915859}
+  directionalLimiter: {fileID: 5421127767580262991}
+  stepRules: {fileID: 5452535066963113852}
+  pathChecker: {fileID: 4387979577316848750}
 --- !u!114 &4850330010607498252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c570e8327a8d5b46a39215199d262c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7757866653971915859
+--- !u!114 &5421127767580262991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,8 +185,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedDirections:
-  - {x: 0, y: 0, z: 1}
-  - {x: -1, y: 0, z: 1}
-  - {x: 1, y: 0, z: 1}
+  - {x: 1, y: 0, z: 0}
+  - {x: 0.5, y: 0, z: 0.8660254}
+  - {x: -0.5, y: 0, z: 0.8660254}
+  - {x: -1, y: 0, z: 0}
+  - {x: -0.5, y: 0, z: -0.8660254}
+  - {x: 0.5, y: 0, z: -0.8660254}
   directionTolerance: 0.9
-  maxDistance: 2.93
+  maxDistance: 10
+--- !u!114 &5452535066963113852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6970572351591886678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0db47225d88114ab80fbd66d5c683b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hexStepLength: 1.732051
+  distanceTolerance: 0.2
+  firstMoveIsOne: 1
+  defaultPreviousStep: 1
+--- !u!114 &4387979577316848750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6970572351591886678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd83e85079b039946a0ee59ab35baf58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hexStepLength: 1.732051
+  sampleRadius: 0.35
+  hexLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  requireWalkableFlag: 1

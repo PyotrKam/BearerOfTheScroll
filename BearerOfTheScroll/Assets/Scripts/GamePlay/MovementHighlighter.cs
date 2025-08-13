@@ -1,45 +1,42 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementHighlighter : MonoBehaviour
 {
+    //ZAEBALO
     [SerializeField] private GameObject highlightPrefab;
-
-    private readonly List<GameObject> activeHighlights = new List<GameObject>();
 
     public void ShowAllowedMoves(PlayerController player)
     {
         ClearMarkers();
 
         HexTile[] allHexes = FindObjectsOfType<HexTile>();
-
         foreach (var hex in allHexes)
         {
-            Vector3 targetPosition = hex.transform.position;
+            if (hex.transform.IsChildOf(transform))
+                continue;
 
-            
-            if (player.CanMoveTo(targetPosition))
+            Vector3 pos = hex.transform.position;
+
+            if (player.CanMoveTo(pos)) 
             {
-                GameObject highlight = Instantiate(
-                    highlightPrefab,
-                    targetPosition + Vector3.up * 0.1f,
-                    Quaternion.identity,
-                    transform
-                );
-
-                activeHighlights.Add(highlight);
+                Instantiate(highlightPrefab, pos + Vector3.up * 0.1f, Quaternion.identity, transform);
             }
         }
     }
 
     public void ClearMarkers()
     {
-        foreach (var obj in activeHighlights)
-        {
-            if (obj != null)
-                Destroy(obj);
-        }
+        int before = transform.childCount;
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
 
-        activeHighlights.Clear();
+        
+        var leftovers = GameObject.FindGameObjectsWithTag("Highlight");
+
+        foreach (var go in leftovers)
+            if (go != null && go.transform.parent != transform)
+                Destroy(go);
+
+
     }
 }
