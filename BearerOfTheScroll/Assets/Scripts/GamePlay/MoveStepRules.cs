@@ -12,8 +12,9 @@ public class MoveStepRules : MonoBehaviour
         
     [SerializeField] private int defaultPreviousStep = 1;
 
-    private int? previousStep; 
-        
+    private int? previousStep;
+       
+
     public bool IsStepCountAllowedNow(int stepCount)
     {
         foreach (var allowed in GetAllowedNextSteps())

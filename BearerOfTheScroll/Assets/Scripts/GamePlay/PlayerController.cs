@@ -5,9 +5,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MovementLimiter movementLimiter;
     [SerializeField] private DirectionalMovementLimiter directionalLimiter;
 
-    //-------------
     [SerializeField] private MoveStepRules stepRules;
     [SerializeField] private PathObstructionChecker pathChecker;
+
+    [Header("Rotation")]
+    [SerializeField] private Transform rotateTarget;
+    [SerializeField] private bool smoothRotate = true;
+    [SerializeField] private float rotateSpeed = 540f;
+    [SerializeField] private float yForwardOffsetDeg = 0f;
+
+    private Coroutine _rotateCo;
 
     private void Awake()
     {
@@ -16,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
         if (directionalLimiter == null)
             directionalLimiter = GetComponent<DirectionalMovementLimiter>();
-        //-----------
+        
         if (stepRules == null)
             stepRules = GetComponent<MoveStepRules>();
 
@@ -30,21 +37,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Movement blocked: Wait for next turn.");
             return;
         }
-        //------------
+        
         int stepCount = 0;
+
         if (stepRules != null && !stepRules.IsDistanceAllowed(transform.position, targetPosition, out stepCount))
         {
             Debug.Log("Movement blocked: step length not allowed now.");
             return;
         }
-
-        /*
-        if (directionalLimiter != null && !directionalLimiter.IsMoveAllowed(transform.position, targetPosition))
-        {
-            Debug.Log("Movement blocked: Wrong direction.");
-            return;
-        }
-        */
+                
         Vector3 alignedDir = Vector3.zero;
 
         if (directionalLimiter != null && !directionalLimiter.TryGetAlignedDirection(transform.position, targetPosition, out alignedDir))
@@ -59,9 +60,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+        FaceTowards(alignedDir);
 
-        //---------
+        transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+       
         if (stepRules != null)
             stepRules.CommitStep(stepCount);
 
@@ -72,8 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!movementLimiter.CanMove())
             return false;
-
-        //--------
+                
         int stepCount = 0;
         if (stepRules != null && !stepRules.IsDistanceAllowed(transform.position, targetPosition, out stepCount))
             return false;
@@ -87,11 +88,37 @@ public class PlayerController : MonoBehaviour
             !pathChecker.IsPathClear(transform.position, targetPosition, stepCount, alignedDir))
             return false;
 
-
-        /*
-        if (directionalLimiter != null && !directionalLimiter.IsMoveAllowed(transform.position, targetPosition))
-            return false;
-        */
         return true;
+    }
+
+    private void FaceTowards(Vector3 alignedDir)
+    {
+        Vector3 fwd = new Vector3(alignedDir.x, 0f, alignedDir.z);
+        if (fwd.sqrMagnitude < 1e-6f) return;
+
+        Quaternion targetRot = Quaternion.LookRotation(fwd, Vector3.up);
+        if (Mathf.Abs(yForwardOffsetDeg) > 0.01f)
+            targetRot = Quaternion.AngleAxis(yForwardOffsetDeg, Vector3.up) * targetRot;
+
+        Transform t = rotateTarget != null ? rotateTarget : transform;
+
+        if (!smoothRotate)
+        {
+            t.rotation = targetRot;
+            return;
+        }
+
+        if (_rotateCo != null) StopCoroutine(_rotateCo);
+        _rotateCo = StartCoroutine(RotateTo(t, targetRot));
+    }
+
+    private System.Collections.IEnumerator RotateTo(Transform t, Quaternion targetRot)
+    {
+        while (Quaternion.Angle(t.rotation, targetRot) > 0.1f)
+        {
+            t.rotation = Quaternion.RotateTowards(t.rotation, targetRot, rotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+        t.rotation = targetRot;
     }
 }
