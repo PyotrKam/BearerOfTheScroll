@@ -13,7 +13,8 @@ public class MoveStepRules : MonoBehaviour
     [SerializeField] private int defaultPreviousStep = 1;
 
     private int? previousStep;
-       
+    public float HexStepLength => hexStepLength;
+
 
     public bool IsStepCountAllowedNow(int stepCount)
     {

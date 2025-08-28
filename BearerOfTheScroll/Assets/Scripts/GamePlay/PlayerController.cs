@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 540f;
     [SerializeField] private float yForwardOffsetDeg = 0f;
 
+    [SerializeField] private Vector3 visualOffset = Vector3.zero;
+
+    [SerializeField] private StepMover stepMover;
+
     private Coroutine _rotateCo;
 
     private void Awake()
@@ -29,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
         if (pathChecker == null) 
             pathChecker = GetComponent<PathObstructionChecker>();
+
+        if (stepMover == null) 
+            stepMover = GetComponent<StepMover>();
     }
     public void MoveTo(Vector3 targetPosition)
     {
@@ -37,7 +44,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Movement blocked: Wait for next turn.");
             return;
         }
-        
+
         int stepCount = 0;
 
         if (stepRules != null && !stepRules.IsDistanceAllowed(transform.position, targetPosition, out stepCount))
@@ -45,7 +52,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Movement blocked: step length not allowed now.");
             return;
         }
-                
+
         Vector3 alignedDir = Vector3.zero;
 
         if (directionalLimiter != null && !directionalLimiter.TryGetAlignedDirection(transform.position, targetPosition, out alignedDir))
@@ -62,12 +69,24 @@ public class PlayerController : MonoBehaviour
 
         FaceTowards(alignedDir);
 
-        transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-       
+        movementLimiter.DisableMovement();
+
+        /*transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+        transform.position = SnapToGrid(transform.position, alignedDir, stepCount) + visualOffset;
+
         if (stepRules != null)
             stepRules.CommitStep(stepCount);
 
         FindObjectOfType<TurnManager>()?.OnPlayerMoved();
+        */
+
+        float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f;
+        stepMover.Play(alignedDir, stepCount, hex, visualOffset, onComplete: () =>
+        {
+            if (stepRules != null) stepRules.CommitStep(stepCount);
+            FindObjectOfType<TurnManager>()?.OnPlayerMoved();
+                        
+        });
     }
 
     public bool CanMoveTo(Vector3 targetPosition)
@@ -120,5 +139,13 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         t.rotation = targetRot;
+    }
+
+    private Vector3 SnapToGrid(Vector3 currentPos, Vector3 alignedDir, int stepCount)
+    {
+        float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f; 
+        Vector3 startXZ = new Vector3(currentPos.x, 0f, currentPos.z);
+        Vector3 snappedXZ = startXZ + alignedDir.normalized * (hex * stepCount);
+        return new Vector3(snappedXZ.x, currentPos.y, snappedXZ.z);
     }
 }
