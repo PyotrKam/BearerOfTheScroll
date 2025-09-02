@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 4387979577316848750}
   - component: {fileID: 1525204889108317470}
   - component: {fileID: 5347473550200754937}
+  - component: {fileID: 7684681942812631733}
+  - component: {fileID: 3423770766765101740}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -276,7 +278,13 @@ MonoBehaviour:
   useHop: 0
   hopHeight: 0.06
   audioSource: {fileID: 5347473550200754937}
-  footstepClip: {fileID: 8300000, guid: 8b25d2e844ffb444a8d3e8601cab5055, type: 3}
+  footstepClips:
+  - {fileID: 8300000, guid: 10401c7e1c8bd804fbb7c3d52c5604e3, type: 3}
+  - {fileID: 8300000, guid: 38cca6c609825124bab7c767a7187e9e, type: 3}
+  - {fileID: 8300000, guid: eb5c6a06800eca148b32b09abd7992db, type: 3}
+  - {fileID: 8300000, guid: e116bbf526e24f843ab4be21ab7394da, type: 3}
+  - {fileID: 8300000, guid: c8c74a2131062934c8bf3f6d00e406a8, type: 3}
+  - {fileID: 8300000, guid: 6d5ba80e78ff0b14e85596e9df4c9493, type: 3}
 --- !u!82 &5347473550200754937
 AudioSource:
   m_ObjectHideFlags: 0
@@ -289,7 +297,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.807
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -373,6 +381,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7684681942812631733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6970572351591886678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b98c4a832905e74b912da99217ed692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallManager: {fileID: 3423770766765101740}
+  rayUp: 2
+  rayDown: 5
+--- !u!114 &3423770766765101740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6970572351591886678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf13b6478cec1a47a2f292fd5f17e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livesPerLevel: 2
+  sfx: {fileID: 5347473550200754937}
+  fallClip: {fileID: 8300000, guid: 8eba87a3b1e8db34496d70775525ad60, type: 3}
+  fallPause: 2
+  restartDelay: 2
+  lobbySceneName: LobbyUI
 --- !u!1001 &3495816896274896527
 PrefabInstance:
   m_ObjectHideFlags: 0

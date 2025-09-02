@@ -6,7 +6,12 @@ public class HexTile : MonoBehaviour
 {
     [Header("Events")]
     [SerializeField] private PlayerSpawnEvent onPlayerSpawnedEvent;
+
+    [Header("Flags")]
     [SerializeField] public bool Walkable = true;
+
+    [Tooltip("Can go, but will fall")]
+    public bool IsObstacle = false;
 
     private PlayerController player;
     
@@ -33,6 +38,7 @@ public class HexTile : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (IsPointerOverUI()) return;
+            if (!Walkable) return;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -63,5 +69,14 @@ public class HexTile : MonoBehaviour
     private bool IsPointerOverUI()
     {
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Walkable) { Gizmos.color = Color.gray; }
+        else if (IsObstacle) { Gizmos.color = Color.red; }
+        else { Gizmos.color = Color.green; }
+
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.02f, 0.25f);
     }
 }

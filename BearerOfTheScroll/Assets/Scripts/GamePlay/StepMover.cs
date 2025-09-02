@@ -5,16 +5,16 @@ using UnityEngine;
 public class StepMover : MonoBehaviour
 {
     [Header("Timing")]
-    [SerializeField] private float stepDuration = 0.16f;    
+    [SerializeField] private float stepDuration = 0.16f;
     [SerializeField] private AnimationCurve ease = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [Header("Hop (optional)")]
-    [SerializeField] private bool useHop = true;             
-    [SerializeField] private float hopHeight = 0.06f;        
+    [SerializeField] private bool useHop = true;
+    [SerializeField] private float hopHeight = 0.06f;
 
     [Header("SFX (optional)")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private AudioClip[] footstepClips;
 
     private Coroutine moveCo;
     
@@ -31,6 +31,18 @@ public class StepMover : MonoBehaviour
 
         float baseY = t.position.y;
         Vector3 startXZ = new Vector3(t.position.x, 0f, t.position.z);
+
+        /*
+        if (audioSource != null && footstepClip != null)
+            audioSource.PlayOneShot(footstepClip);
+        */
+        if (audioSource != null && footstepClips != null && footstepClips.Length > 0)
+        {
+            int idx = UnityEngine.Random.Range(0, footstepClips.Length);
+            audioSource.pitch = UnityEngine.Random.Range(0.95f, 1.05f); 
+            audioSource.PlayOneShot(footstepClips[idx]);
+        }
+
 
         for (int i = 1; i <= stepCount; i++)
         {
@@ -60,8 +72,7 @@ public class StepMover : MonoBehaviour
                         
             t.position = to;
                         
-            if (audioSource != null && footstepClip != null)
-                audioSource.PlayOneShot(footstepClip);
+           
         }
 
         moveCo = null;

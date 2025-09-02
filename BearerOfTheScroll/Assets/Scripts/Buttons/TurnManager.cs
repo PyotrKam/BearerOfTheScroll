@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class TurnManager : MonoBehaviour
 {
     [SerializeField] private Button nextTurnButton;
+    [SerializeField] private ArrivalObstacleFall arrivalFall;
 
     private MovementLimiter movementLimiter;
 
@@ -29,6 +30,8 @@ public class TurnManager : MonoBehaviour
         if (movementHighlighter != null && player != null)
             movementHighlighter.ShowAllowedMoves(player);
 
+        if (arrivalFall == null) arrivalFall = FindObjectOfType<ArrivalObstacleFall>();
+
         StartCoroutine(FindButtonLater());
     }
 
@@ -52,7 +55,19 @@ public class TurnManager : MonoBehaviour
     public void OnPlayerMoved()
     {
         movementLimiter?.DisableMovement();
-        nextTurnButton.gameObject.SetActive(true); 
+
+        bool fell = arrivalFall != null && arrivalFall.CheckAndHandle();
+
+        if (fell)
+        {            
+            nextTurnButton.gameObject.SetActive(false);
+        }
+        else
+        {            
+            nextTurnButton.gameObject.SetActive(true);
+        }
+
+        //nextTurnButton.gameObject.SetActive(true); 
     }
 
     private IEnumerator FindButtonLater()
