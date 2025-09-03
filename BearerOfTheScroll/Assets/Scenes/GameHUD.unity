@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d7e136fa94b824a9e461bc960c6daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallManager: {fileID: 3423770766765101740, guid: 8633bfeb769e64943a16c507cc858b8b, type: 3}
+  fallManager: {fileID: 0}
   hearts:
   - {fileID: 86080954}
   - {fileID: 1274808833}
