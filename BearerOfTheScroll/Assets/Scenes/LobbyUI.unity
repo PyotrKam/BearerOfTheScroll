@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 1000049735}
   - component: {fileID: 1000049734}
   - component: {fileID: 1000049737}
+  - component: {fileID: 1000049738}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -482,6 +483,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1000049738}
+        m_TargetAssemblyTypeName: LevelButton, Assembly-CSharp
+        m_MethodName: StartLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1000049735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +545,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e6f88c879a9ea479dff569068d83a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1000049738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000049732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e12f914a69c9446a42e793b11e0bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSceneName: Level_1
+  defaultLives: 3
 --- !u!1 &1826315117
 GameObject:
   m_ObjectHideFlags: 0

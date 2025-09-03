@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf13b6478cec1a47a2f292fd5f17e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesPerLevel: 2
+  livesPerLevel: 3
   sfx: {fileID: 5347473550200754937}
   fallClip: {fileID: 8300000, guid: 8eba87a3b1e8db34496d70775525ad60, type: 3}
   fallPause: 2

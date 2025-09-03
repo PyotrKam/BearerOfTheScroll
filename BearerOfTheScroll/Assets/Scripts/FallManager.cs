@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class FallManager : MonoBehaviour
 {
     [Header("Lives")]
-    [SerializeField] private int livesPerLevel = 1;
+    [SerializeField] private int livesPerLevel = 3;
+
+    private static int s_currentLives = -1;
+
     public int Lives { get; private set; }
 
     [Header("FX")]
@@ -30,8 +33,22 @@ public class FallManager : MonoBehaviour
 
     void Awake()
     {
-        Lives = livesPerLevel;
+        EnsureInitialized(livesPerLevel);
+
+
+        Lives = s_currentLives;
         OnLivesChanged?.Invoke(Lives);
+    }
+
+    public static void StartNewRun(int defaultLives)
+    {
+        s_currentLives = Mathf.Max(0, defaultLives);
+    }
+
+    public static void EnsureInitialized(int defaultLives)
+    {
+        if (s_currentLives < 0)
+            s_currentLives = Mathf.Max(0, defaultLives);
     }
 
     public void ResetLives()
@@ -52,6 +69,7 @@ public class FallManager : MonoBehaviour
         OnFall?.Invoke();
 
         Lives = Mathf.Max(0, Lives - 1);
+        s_currentLives = Lives;
         Debug.Log($"[FallManager] Lives now: {Lives}");
         OnLivesChanged?.Invoke(Lives);
 
@@ -59,7 +77,7 @@ public class FallManager : MonoBehaviour
 
         if (Lives > 0)
         {
-            
+            OnAfterFall?.Invoke();
             if (restartDelay > 0f)
                 yield return new WaitForSeconds(restartDelay);
 
@@ -84,7 +102,7 @@ public class FallManager : MonoBehaviour
             yield break;
         }
         Debug.Log("[FallManager] OnAfterFall()");
-        OnAfterFall?.Invoke();
+        
         */
     }
 }
