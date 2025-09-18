@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 1007629625538457994}
   - component: {fileID: -3768114523126691829}
   - component: {fileID: -7809802243196551543}
-  m_Layer: 0
-  m_Name: Highlighter
+  - component: {fileID: 5535458444693861033}
+  m_Layer: 3
+  m_Name: FinishTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2359431851731228936}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 227.87341, y: 0.18, z: -1146.118}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
+  m_LocalPosition: {x: 227.87341, y: 0.099999994, z: -1146.118}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0420ada7138b9848802e57eb20ba1fc, type: 2}
+  - {fileID: 2100000, guid: 1daf517f038e1fe468c2a54e61339fc8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,11 +101,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: 219a6d5467601b54185031c648b7839f, type: 3}
 --- !u!114 &-7809802243196551543
@@ -122,3 +123,17 @@ MonoBehaviour:
   onPlayerSpawnedEvent: {fileID: 11400000, guid: e631aba92b96f6447b90cb96f02a2473, type: 2}
   Walkable: 1
   IsObstacle: 0
+--- !u!114 &5535458444693861033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359431851731228936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a919f24d97928174e8a7d50e2b630cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finishMessage: Finish! Level done!
+  uiSceneName: LevelEndUI

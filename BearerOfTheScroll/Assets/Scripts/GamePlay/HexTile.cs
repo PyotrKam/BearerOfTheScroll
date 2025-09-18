@@ -59,6 +59,9 @@ public class HexTile : MonoBehaviour
         if (player != null)
         {
             player.MoveTo(transform.position);
+
+            if (TryGetComponent<FinishTile>(out var finish))
+                StartCoroutine(WaitArrivalAndOpenFinish(finish));
         }
         else
         {
@@ -78,5 +81,27 @@ public class HexTile : MonoBehaviour
         else { Gizmos.color = Color.green; }
 
         Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.02f, 0.25f);
+    }
+
+    private System.Collections.IEnumerator WaitArrivalAndOpenFinish(FinishTile finish)
+    {
+        var limiter = player != null ? player.GetComponent<MovementLimiter>() : null;
+                
+        float timeout = 3f, t = 0f;
+        while (limiter != null && !limiter.CanMove() && t < timeout)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        
+        if (player == null) yield break;
+        var p = player.transform.position;
+        var target = transform.position;
+        if ((new Vector3(p.x, 0, p.z) - new Vector3(target.x, 0, target.z)).sqrMagnitude > 0.3f * 0.3f)
+            yield break;
+
+        
+        finish.OnPlayerArrived();
     }
 }

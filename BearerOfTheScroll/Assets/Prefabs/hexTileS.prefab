@@ -120,3 +120,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onPlayerSpawnedEvent: {fileID: 11400000, guid: e631aba92b96f6447b90cb96f02a2473, type: 2}
+  Walkable: 1
+  IsObstacle: 0
