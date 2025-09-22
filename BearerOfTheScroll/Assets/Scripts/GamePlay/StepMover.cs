@@ -16,8 +16,30 @@ public class StepMover : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] footstepClips;
 
+    [Header("Rules (optional)")]
+    [SerializeField] private SimpleSpeedTurnLimiter speedTurnLimiter;
+
+    private void Awake()
+    {
+        if (speedTurnLimiter == null)
+        {
+            speedTurnLimiter = FindObjectOfType<SimpleSpeedTurnLimiter>();
+            if (speedTurnLimiter == null)
+                Debug.LogWarning("[StepMover] SimpleSpeedTurnLimiter not found in scene.");
+        }
+    }
+
     private Coroutine moveCo;
-    
+
+    public bool IsMoveAllowedFromHere(Vector3 alignedDir, int stepCount, float hexStepLength)
+    {
+        if (speedTurnLimiter == null) return true;
+        Vector3 from = transform.position;
+        Vector3 dirXZ = new Vector3(alignedDir.x, 0f, alignedDir.z).normalized;
+        Vector3 to = from + dirXZ * hexStepLength * stepCount;
+        return speedTurnLimiter.Allowed(from, to);
+    }
+
     public void Play(Vector3 alignedDir, int stepCount, float hexStepLength, Vector3 visualOffset, Action onComplete)
     {
         if (moveCo != null) StopCoroutine(moveCo);
@@ -30,6 +52,7 @@ public class StepMover : MonoBehaviour
         Vector3 dirXZ = new Vector3(alignedDir.x, 0f, alignedDir.z).normalized;
 
         float baseY = t.position.y;
+        Vector3 startPos = t.position;
         Vector3 startXZ = new Vector3(t.position.x, 0f, t.position.z);
 
         /*
@@ -73,6 +96,12 @@ public class StepMover : MonoBehaviour
             t.position = to;
                         
            
+        }
+
+        if (speedTurnLimiter != null)
+        {
+            Vector3 endWorld = startPos + dirXZ * hex * stepCount; 
+            speedTurnLimiter.NoteMove(startPos, endWorld, stepCount);
         }
 
         moveCo = null;

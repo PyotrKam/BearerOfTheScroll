@@ -1182,6 +1182,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1889116118151225802, guid: 856841b80050b0e4d9ff280ee51a667a, type: 3}
   m_PrefabInstance: {fileID: 184822725}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &796542988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 796542990}
+  - component: {fileID: 796542989}
+  m_Layer: 0
+  m_Name: SpeedTurnLimiter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &796542989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796542988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793207dc2f4d7de4aab967d892c797a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directions:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0.5, y: 0, z: 0.8660254}
+  - {x: -0.5, y: 0, z: 0.8660254}
+  - {x: -1, y: 0, z: 0}
+  - {x: -0.5, y: 0, z: -0.8660254}
+  - {x: 0.5, y: 0, z: -0.8660254}
+  tolerance: 0.9
+--- !u!4 &796542990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796542988}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.86602545, y: 0.97499996, z: -9.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &828934095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2591,6 +2643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   safeHighlightPrefab: {fileID: 2359431851731228936, guid: 0b046ddd9b19de142ba2ea2d2d293db5, type: 3}
   dangerHighlightPrefab: {fileID: 2359431851731228936, guid: a601e25b7fa69f947ab8c62be9512189, type: 3}
+  speedTurnLimiter: {fileID: 796542989}
 --- !u!4 &1533020649
 Transform:
   m_ObjectHideFlags: 0
@@ -4002,3 +4055,4 @@ SceneRoots:
   - {fileID: 1533020649}
   - {fileID: 2141194177}
   - {fileID: 12051759}
+  - {fileID: 796542990}

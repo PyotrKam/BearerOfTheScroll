@@ -5,12 +5,14 @@ public class MovementHighlighter : MonoBehaviour
     //ZAEBALO
     [SerializeField] private GameObject safeHighlightPrefab;
     [SerializeField] private GameObject dangerHighlightPrefab;
+    [SerializeField] private SimpleSpeedTurnLimiter speedTurnLimiter; //try
 
     public void ShowAllowedMoves(PlayerController player)
     {
         ClearMarkers();
 
         HexTile[] allHexes = FindObjectsOfType<HexTile>();
+        Vector3 from = player.transform.position;//try
 
         foreach (var hex in allHexes)
         {
@@ -24,6 +26,9 @@ public class MovementHighlighter : MonoBehaviour
 
             if (player.CanMoveTo(pos)) 
             {
+                if (speedTurnLimiter != null && !speedTurnLimiter.Allowed(from, pos)) //try
+                    continue;
+
                 var prefab = hex.IsObstacle ? dangerHighlightPrefab : safeHighlightPrefab;
                 if (prefab == null)
                 {
