@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private StepMover stepMover;
 
+    [SerializeField] private SimpleSpeedTurnLimiter speedTurnLimiter; // Trying
+    [SerializeField] private MovementHighlighter highlighter;         // Trying
+
     private Coroutine _rotateCo;
 
     private void Awake()
@@ -36,6 +39,12 @@ public class PlayerController : MonoBehaviour
 
         if (stepMover == null) 
             stepMover = GetComponent<StepMover>();
+
+        if (speedTurnLimiter == null) 
+            speedTurnLimiter = FindObjectOfType<SimpleSpeedTurnLimiter>();
+
+        if (highlighter == null) 
+            highlighter = FindObjectOfType<MovementHighlighter>();
     }
     public void MoveTo(Vector3 targetPosition)
     {
@@ -44,6 +53,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Movement blocked: Wait for next turn.");
             return;
         }
+
+        // NEW 
+
+        //if (movementLimiter != null && !movementLimiter.IsHexAvailable(targetPosition))
+       // {
+        //    Debug.Log("Movement blocked: target is not highlighted/allowed.");
+        //    return;
+        //}
 
         int stepCount = 0;
 
@@ -67,6 +84,14 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        //NEW
+        if (speedTurnLimiter != null &&
+            !speedTurnLimiter.Allowed(transform.position, targetPosition))
+        {
+            Debug.Log("Movement blocked: out of speed-turn sector.");
+            return;
+        }
+
         FaceTowards(alignedDir);
 
         movementLimiter.DisableMovement();
@@ -81,9 +106,24 @@ public class PlayerController : MonoBehaviour
         */
 
         float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f;
+        Vector3 fromWorld = transform.position;          // NEW
+
         stepMover.Play(alignedDir, stepCount, hex, visualOffset, onComplete: () =>
         {
             if (stepRules != null) stepRules.CommitStep(stepCount);
+
+            // NEW
+            if (speedTurnLimiter != null)
+                speedTurnLimiter.NoteMove(fromWorld, targetPosition, stepCount);
+
+            // NEW
+            if (highlighter != null)
+                highlighter.ShowAllowedMoves(this);
+
+            // NEW
+            movementLimiter.EnableMovement();
+
+
             FindObjectOfType<TurnManager>()?.OnPlayerMoved();
                         
         });
