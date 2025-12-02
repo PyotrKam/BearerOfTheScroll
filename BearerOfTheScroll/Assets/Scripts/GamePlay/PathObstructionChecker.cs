@@ -6,8 +6,10 @@ public class PathObstructionChecker : MonoBehaviour
     [SerializeField] private float sampleRadius = 0.35f; 
         
     [SerializeField] private LayerMask hexLayer;            
-    [SerializeField] private bool requireWalkableFlag = true; 
-        
+    [SerializeField] private bool requireWalkableFlag = true;
+
+    [SerializeField] private bool detectHazardOnPath = true;
+
     public bool IsPathClear(Vector3 from, Vector3 to, int stepCount, Vector3 alignedDir)
     {
         Vector3 start = new Vector3(from.x, 0, from.z);

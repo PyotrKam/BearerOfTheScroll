@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //NEW
+        
         if (speedTurnLimiter != null &&
             !speedTurnLimiter.Allowed(transform.position, targetPosition))
         {
