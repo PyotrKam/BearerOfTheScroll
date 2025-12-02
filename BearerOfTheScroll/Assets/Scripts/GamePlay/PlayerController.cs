@@ -92,6 +92,38 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // ========= NEW: подготовка общих значений для шага и поиска хазарда =========
+        float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f;   // NEW
+        Vector3 fromWorld = transform.position;                                  // NEW
+
+        // ========= NEW: ищем первый "опасный" гекс на пути =========
+        int hazardStepIndex = -1;                                                // NEW
+        bool hasHazardOnPath = pathChecker != null &&                            // NEW
+                               pathChecker.TryFindFirstHazardOnPath(             // NEW
+                                   fromWorld,                                    // NEW
+                                   stepCount,                                    // NEW
+                                   alignedDir,                                   // NEW
+                                   out hazardStepIndex);                         // NEW
+
+        // Сколько шагов реально пройдём и куда в итоге придём                  // NEW
+        int actualStepCount = stepCount;                                         // NEW
+        Vector3 finalTargetPos = targetPosition;                                  // NEW
+
+        if (hasHazardOnPath && hazardStepIndex > 0)                              // NEW
+        {                                                                        // NEW
+            actualStepCount = hazardStepIndex;                                   // NEW
+
+            // Пересчитываем конечную точку так, чтобы остановиться на хазарде // NEW
+            Vector3 dirXZ = new Vector3(alignedDir.x, 0f, alignedDir.z).normalized; // NEW
+            Vector3 fromXZ = new Vector3(fromWorld.x, 0f, fromWorld.z);         // NEW
+            Vector3 finalXZ = fromXZ + dirXZ * (hex * actualStepCount);         // NEW
+
+            finalTargetPos = new Vector3(finalXZ.x, targetPosition.y, finalXZ.z); // NEW
+
+            Debug.Log($"Hazard on path at step {hazardStepIndex}. Will stop at {finalTargetPos}"); // NEW
+        }
+        // ========= END NEW блок поиска и обработки хазарда =========
+
         FaceTowards(alignedDir);
 
         movementLimiter.DisableMovement();
@@ -105,22 +137,23 @@ public class PlayerController : MonoBehaviour
         FindObjectOfType<TurnManager>()?.OnPlayerMoved();
         */
 
-        float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f;
-        Vector3 fromWorld = transform.position;          // NEW
+        // LAST EDIT____ float hex = (stepRules != null) ? stepRules.HexStepLength : 1.732051f;
+        // LAST EDIT____ Vector3 fromWorld = transform.position;          
 
-        stepMover.Play(alignedDir, stepCount, hex, visualOffset, onComplete: () =>
+        stepMover.Play(alignedDir, actualStepCount, hex, visualOffset, onComplete: () =>                  //BEFORE stepMover.Play(alignedDir, stepCount, hex, visualOffset, onComplete: () =>
         {
-            if (stepRules != null) stepRules.CommitStep(stepCount);
+            if (stepRules != null)
+                stepRules.CommitStep(actualStepCount);
 
-            // NEW
+            
             if (speedTurnLimiter != null)
-                speedTurnLimiter.NoteMove(fromWorld, targetPosition, stepCount);
+                speedTurnLimiter.NoteMove(fromWorld, finalTargetPos, actualStepCount);                           //BEFORE speedTurnLimiter.NoteMove(fromWorld, targetPosition, stepCount);
 
-            // NEW
+
             if (highlighter != null)
                 highlighter.ShowAllowedMoves(this);
 
-            // NEW
+            
             movementLimiter.EnableMovement();
 
 

@@ -45,4 +45,40 @@ public class PathObstructionChecker : MonoBehaviour
 
         return true;
     }
+
+    public bool TryFindFirstHazardOnPath(Vector3 from, int stepCount, Vector3 alignedDir, out int hazardStepIndex)
+    {
+        hazardStepIndex = -1;
+
+        if (!detectHazardOnPath)
+            return false;
+
+        Vector3 start = new Vector3(from.x, 0, from.z);
+        Vector3 dir = new Vector3(alignedDir.x, 0, alignedDir.z).normalized;
+
+        for (int i = 1; i <= stepCount; i++)
+        {
+            Vector3 sample = start + dir * (hexStepLength * i);
+
+            var hits = Physics.OverlapSphere(sample + Vector3.up * 0.1f, sampleRadius, hexLayer);
+            if (hits == null || hits.Length == 0)
+                continue;
+
+            foreach (var h in hits)
+            {
+                var tile = h.GetComponentInParent<HexTile>() ?? h.GetComponent<HexTile>();
+                if (tile == null) continue;
+                if (!tile.enabled) continue;
+
+                
+                if (tile.IsObstacle) 
+                {
+                    hazardStepIndex = i;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
