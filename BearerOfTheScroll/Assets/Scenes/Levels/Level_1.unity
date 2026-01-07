@@ -5464,6 +5464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492566503}
   - component: {fileID: 1492566504}
+  - component: {fileID: 1492566505}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -5503,6 +5504,24 @@ MonoBehaviour:
   playerPrefab: {fileID: 6970572351591886678, guid: 8633bfeb769e64943a16c507cc858b8b, type: 3}
   onGameStartedEvent: {fileID: 11400000, guid: 8d8605dc38470db438f64d7a92bf79a8, type: 2}
   onPlayerSpawnedEvent: {fileID: 11400000, guid: e631aba92b96f6447b90cb96f02a2473, type: 2}
+--- !u!114 &1492566505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492566502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8480a5f4165354d9cd2894eb4b7719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabs:
+  - {fileID: 657893783205608991, guid: d7a5a1983dc340140ba5300fa2bdb967, type: 3}
+  spawnPoints:
+  - {fileID: 137332841}
+  onPlayerSpawnedEvent: {fileID: 11400000, guid: e631aba92b96f6447b90cb96f02a2473, type: 2}
+  onEnemySpawnedEvent: {fileID: 0}
 --- !u!4 &1503551695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1889116118151225802, guid: 559a8dbc33d1ac84fb696c5abd46083b, type: 3}

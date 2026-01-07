@@ -17,7 +17,7 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("TurnManager Start called");
+        //Debug.Log("TurnManager Start called");
 
         movementLimiter = FindObjectOfType<MovementLimiter>();
         player = FindObjectOfType<PlayerController>();
@@ -95,7 +95,7 @@ public class TurnManager : MonoBehaviour
         //nextTurnButton.onClick.AddListener(EndPlayerTurn);
         Debug.Log("EndPlayerTurn listener added.");
 
-        Debug.Log($"Listeners on NextTurnButton: {nextTurnButton.onClick.GetPersistentEventCount()}");
+        //Debug.Log($"Listeners on NextTurnButton: {nextTurnButton.onClick.GetPersistentEventCount()}");
 
     }
 }

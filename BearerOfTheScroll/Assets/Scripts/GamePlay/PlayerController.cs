@@ -21,7 +21,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SimpleSpeedTurnLimiter speedTurnLimiter; // Trying
     [SerializeField] private MovementHighlighter highlighter;         // Trying
 
+    private FallManager fall;
+
     private Coroutine _rotateCo;
+
+    private void Start()
+    {
+        fall = FindObjectOfType<FallManager>();
+    }
 
     private void Awake()
     {
@@ -220,5 +227,10 @@ public class PlayerController : MonoBehaviour
         Vector3 startXZ = new Vector3(currentPos.x, 0f, currentPos.z);
         Vector3 snappedXZ = startXZ + alignedDir.normalized * (hex * stepCount);
         return new Vector3(snappedXZ.x, currentPos.y, snappedXZ.z);
+    }
+
+    public void OnEnemyCaught()
+    {
+        fall?.Fall();
     }
 }

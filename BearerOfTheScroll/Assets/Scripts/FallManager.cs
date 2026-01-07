@@ -31,11 +31,12 @@ public class FallManager : MonoBehaviour
     public event Action OnFall;              // animation
     public event Action OnAfterFall;         // restart or something else
 
+    private bool _falling;
+
     void Awake()
     {
+        _falling = false;
         EnsureInitialized(livesPerLevel);
-
-
         Lives = s_currentLives;
         OnLivesChanged?.Invoke(Lives);
     }
@@ -59,6 +60,9 @@ public class FallManager : MonoBehaviour
 
     public void Fall()
     {
+        if (_falling) return;  
+        _falling = true;
+
         StartCoroutine(FallRoutine());
     }
 
